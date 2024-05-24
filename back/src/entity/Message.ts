@@ -23,7 +23,7 @@ export class Message {
     @Column()
     private content: string
 
-    @ManyToOne(type => Room, { onDelete: 'CASCADE' }) // Init many to one relation with User
+    @ManyToOne(type => Room, { onDelete: 'CASCADE' }) // Init many to one relation with Room
     @JoinColumn()
     room: Room;
 
@@ -59,5 +59,13 @@ export class Message {
     }
     public getUpdated_at(): Date {
         return this.updated_at;
+    }
+
+    //Getters et setters de relations
+    public getRoom(): Room {
+        return this.room;
+    }
+    public setRoom(room: Room) {
+        this.room = room;
     }
 }

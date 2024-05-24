@@ -1,6 +1,6 @@
 import {
     Entity,
-    PrimaryGeneratedColumn,
+    PrimaryColumn,
     Column,
     ManyToMany,
     JoinTable,
@@ -15,7 +15,7 @@ import { Message } from "./Message";
 @Entity()
 export class Room {
 
-    @PrimaryGeneratedColumn("uuid")
+    @PrimaryColumn()
     private id: string
 
     @Column({ nullable: true })
@@ -35,6 +35,9 @@ export class Room {
     public getId(): string {
         return this.id;
     }
+    public setId(id: string): void {
+        this.id = id;
+    }
     public getName(): string {
         return this.name;
     }
@@ -47,5 +50,4 @@ export class Room {
     public setPassword(password: string): void {
         this.password = password;
     }
-
 }
