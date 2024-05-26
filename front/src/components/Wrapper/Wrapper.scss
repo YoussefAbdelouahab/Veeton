@@ -1,0 +1,37 @@
+.wrapper {
+    width: 30%;
+    font-size: 18px;
+
+    p {
+        width: 80%;
+        animation: fade-inout 5s;
+    }
+
+    .button-container {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        gap: 15%;
+        margin-top: 50px;
+        animation: fade-inout 6s;
+
+        button {
+            background-color: #2e2e2e;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 15px;
+            font-size: 18px;
+            font-family: "Montserrat", sans-serif;
+            color: #c9c9c9;
+            cursor: pointer;
+            transition: all 500ms ease-in-out;
+        }
+
+        button:hover {
+            transform: translateY(-10px);
+            color: #2e2e2e;
+            background-color: #c9c9c9;
+        }
+    }
+}

@@ -1,8 +1,10 @@
 import 'reflect-metadata';
-import { JsonController, Param, Body, Get, Post, Put, Delete, Req, Patch, BadRequestError, NotFoundError } from 'routing-controllers';
+import { JsonController, Param, Body, Get, Post, Put, Delete, Req, Patch, BadRequestError, NotFoundError, Controller, Res } from 'routing-controllers';
 import { AppDataSource } from '../db/data-source';
 import { Room } from '../entity/Room';
 import * as bcrypt from "bcrypt";
+import { error } from 'console';
+import { Response } from 'express';
 
 function GenerateRoomID(length) {
     let result = '';
@@ -15,7 +17,7 @@ function GenerateRoomID(length) {
     }
     return result;
 }
-@JsonController()
+@Controller()
 export class RoomController {
     constructor(private roomRepository) {
         this.roomRepository = AppDataSource.getRepository(Room);
@@ -42,23 +44,23 @@ export class RoomController {
     }
 
     @Post("/room/join")
-    public async join(@Body() data: Room) {
+    public async join(@Body() data: Room, @Res() res: Response) {
         try {
             const room: Room = await this.roomRepository.findOne({ where: { id: data.getId() } });
-            if (!room) throw new NotFoundError('Room not found');
+            if (!room) throw new Error('Room not found');
 
-            if (room.getPassword) {
+            if (room.getPassword()) {
                 if (data.getPassword() == undefined) {
-                    throw new BadRequestError('Password is required')
+                    throw new Error('Password is required')
                 }
 
                 const isValid = await bcrypt.compare(data.getPassword(), room.getPassword());
-                if (!isValid) throw new BadRequestError('Password Error');
+                if (!isValid) throw new Error('Password Error');
             }
 
-            return { success: "Room joined" };
+            return res.status(200).json({ success: 'Room joined' });
         } catch (error) {
-            return { error: error.message };
+            return res.status(400).json({ error: error.message });
         }
     }
 
