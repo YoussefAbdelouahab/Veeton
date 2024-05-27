@@ -7,6 +7,13 @@ export default function MessageBox(props: any) {
     const [ask, setAsk] = useState(false);
     function handleDelete() {
         axios.delete(`http://localhost:8000/api/message/${props.id}`)
+            .then(function (res) {
+                if (res.status === 200) {
+                    setAsk(false);
+                }
+            }).catch(function (error) {
+                console.log(error)
+            });
     }
     return (
         <>
@@ -36,7 +43,7 @@ export default function MessageBox(props: any) {
                 </div>
                 <div className="content">
                     <p>{props.content}</p>
-                    <button className="delete-btn" onClick={() => setAsk(true)}><img src="/assets/delete.png" alt="" /></button>
+                    {props.name === localStorage.getItem("user") ? <button className="delete-btn" onClick={() => setAsk(true)}><img src="/assets/delete.png" alt="" /></button> : null}
                 </div>
                 <div className="date">
                     <p>{moment(props.date).calendar()}</p>

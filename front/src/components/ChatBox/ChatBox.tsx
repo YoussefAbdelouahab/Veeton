@@ -4,8 +4,15 @@ import { useState } from "react"
 import axios from "axios"
 import "./ChatBox.scss"
 
+function updateScroll() {
+    var element = document.getElementById("messages-container");
+    if (element) {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+}
+
 export default function ChatBox(props: any) {
-    const [textMessage, setTextMessage] = useState("")
+    const [textMessage, setTextMessage] = useState("");
 
     function handleOnEnter() {
         axios.post(`http://localhost:8000/api/message/create`, {
@@ -15,10 +22,7 @@ export default function ChatBox(props: any) {
         }).then(function (res) {
             if (res.status === 200) {
                 props.socket.emit('chat message', textMessage, localStorage.getItem("user"), props.id, Date.now())
-                var objDiv = document.getElementById("messages-container");
-                if (objDiv) {
-                    objDiv.scrollTop = objDiv.scrollHeight - 800;
-                }
+                updateScroll();
             }
         }).catch(function (error) {
             console.log(error)
@@ -26,7 +30,7 @@ export default function ChatBox(props: any) {
     }
     return (
         <>
-            <div className="chatbox">
+            <div className="chatbox" >
                 <div className="messages-container" id="messages-container">
                     {props.message.length > 0 ? props.message.map((message: any) => (
                         <MessageBox name={message.user} content={message.content} date={message.created_at} id={message.id} />
@@ -40,7 +44,7 @@ export default function ChatBox(props: any) {
                         onEnter={handleOnEnter}
                         placeholder="Type a message ..."
                         shouldConvertEmojiToImage={false}
-                        shouldReturn={true}
+                        shouldReturn={false}
                     />
                 </div>
             </div>
