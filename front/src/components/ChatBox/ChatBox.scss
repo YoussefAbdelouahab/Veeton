@@ -1,0 +1,56 @@
+.chatbox {
+    height: 96%;
+    background-color: black;
+    border-radius: 15px;
+    color: white;
+    padding: 15px;
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    p {
+        margin: 0;
+    }
+
+    .messages-container {
+        display: flex;
+        flex-direction: column;
+        height: 90%;
+    }
+
+    .input-container {
+        height: 10%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .react-input-emoji--container {
+            background-color: #2e2e2e !important;
+            color: white !important;
+        }
+
+        .react-input-emoji--input {
+            color: white !important;
+        }
+
+        .send-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #182D62;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            height: 50%;
+            border-radius: 100%;
+
+            img {
+                height: 50%;
+                filter: invert(1);
+                margin-right: 2px;
+            }
+        }
+    }
+
+}

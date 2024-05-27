@@ -3,6 +3,7 @@ import axios from "axios";
 import DisplayCreate from "../../../utils/DisplayCreate";
 import CheckEmptyString from "../../../utils/CheckEmptyString";
 import './Join.scss'
+import { useNavigate } from "react-router-dom";
 
 export default function Join() {
     const [room, setRoom] = useState({
@@ -13,6 +14,7 @@ export default function Join() {
     const [showError, setShowError] = useState(false);
     const [showError2, setShowError2] = useState(false);
     const [submitError, setSubmitError] = useState("");
+    const navigate = useNavigate();
 
     function joinRoom() {
         if (user.length === 0) {
@@ -39,7 +41,8 @@ export default function Join() {
             ...(room.password.length > 0 ? { password: room.password.trim() } : {})
         }).then(function (res) {
             if (res.status === 200) {
-                //To do
+                localStorage.setItem("token", res.data.token)
+                navigate(`/room/${res.data.id}`)
             }
         }).catch(function (error) {
             setSubmitError(error.response.data.error)
@@ -67,7 +70,7 @@ export default function Join() {
                     <p>Password</p>
                     <input type="text" placeholder='None' onChange={e => setRoom({ ...room, password: e.target.value })} />
                 </div>
-                <button onClick={() => joinRoom()}>Create</button>
+                <button onClick={() => joinRoom()}>Join</button>
                 {submitError.length > 1 ? <><p className="error">{submitError}</p></> : null}
 
             </div >

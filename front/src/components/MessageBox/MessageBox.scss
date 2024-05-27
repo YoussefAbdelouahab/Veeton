@@ -1,0 +1,43 @@
+.message-box {
+    max-width: 40%;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .username,
+    .date p {
+        font-size: 16px;
+        letter-spacing: 2px;
+        font-weight: normal;
+    }
+
+    .content {
+        flex-grow: 0;
+        background-color: #2e2e2e;
+        padding: 20px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+    }
+
+    .date {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 10px;
+    }
+}
+
+.self {
+    display: flex;
+    justify-content: flex-end !important;
+    align-self: flex-end;
+
+    .content {
+        flex-grow: 0;
+
+        background-color: #182D62;
+        border-top-right-radius: 0px !important;
+        border-top-left-radius: 15px !important;
+    }
+}

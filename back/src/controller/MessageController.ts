@@ -37,7 +37,7 @@ export class MessageController {
             const room: Room = await this.roomRepository.findOne({ where: { id: roomid } });
             if (!room) throw new NotFoundError('Room not found');
 
-            const message: Message = await this.messageRepository.find({ where: { room: { id: roomid } } });
+            const message: Message = await this.messageRepository.find({ where: { room: { id: roomid } }, order: { updated_at: "ASC" } });
             if (!message) throw new Error('Messages not found');
             return message;
         } catch (err) {

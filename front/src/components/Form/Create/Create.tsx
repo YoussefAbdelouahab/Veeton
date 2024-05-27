@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DisplayJoin from "../../../utils/DisplayJoin";
-import './Create.scss'
 import axios from "axios";
+import './Create.scss'
 
 export default function Create() {
     const [room, setRoom] = useState({
@@ -10,6 +11,8 @@ export default function Create() {
     })
     const [user, setUser] = useState("");
     const [showError, setShowError] = useState(false);
+    const navigate = useNavigate();
+
 
     function createRoom() {
         if (user.length === 0) {
@@ -20,11 +23,25 @@ export default function Create() {
         localStorage.setItem("user", user);
         setShowError(false);
 
+        //Create the room
         axios.post(`http://localhost:8000/api/room/create`, {
-            ...(room.name.length > 0 ? { password: room.name.trim() } : {}),
+            ...(room.name.length > 0 ? { name: room.name.trim() } : {}),
             ...(room.password.length > 0 ? { password: room.password.trim() } : {})
+
         }).then(function (res) {
-            //to do
+            //then join it
+            axios.post(`http://localhost:8000/api/room/join`, {
+                id: res.data.id,
+                ...(room.password.length > 0 ? { password: room.password.trim() } : {})
+
+            }).then(function (res) {
+                if (res.status === 200) {
+                    localStorage.setItem("token", res.data.token)
+                    navigate(`/room/${res.data.id}`)
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
         }).catch(function (error) {
             console.log(error);
         });

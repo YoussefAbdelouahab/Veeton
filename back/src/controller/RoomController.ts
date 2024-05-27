@@ -3,7 +3,7 @@ import { JsonController, Param, Body, Get, Post, Put, Delete, Req, Patch, BadReq
 import { AppDataSource } from '../db/data-source';
 import { Room } from '../entity/Room';
 import * as bcrypt from "bcrypt";
-import { error } from 'console';
+import * as jwt from "jsonwebtoken";
 import { Response } from 'express';
 
 function GenerateRoomID(length) {
@@ -37,7 +37,7 @@ export class RoomController {
 
             await this.roomRepository.save(room);
 
-            return { success: "Room created" };
+            return { success: "Room created", id: room.getId() };
         } catch (error) {
             return { error: error.message };
         }
@@ -58,7 +58,18 @@ export class RoomController {
                 if (!isValid) throw new Error('Password Error');
             }
 
-            return res.status(200).json({ success: 'Room joined' });
+            const token = jwt.sign(
+                {
+                    id: room.getId(),
+                    name: room.getName()
+                },
+                "bc042227-9f88-414d",
+                {
+                    expiresIn: "24h",
+                }
+            );
+
+            return res.status(200).json({ success: 'Room joined', id: room.getId(), token: token });
         } catch (error) {
             return res.status(400).json({ error: error.message });
         }
