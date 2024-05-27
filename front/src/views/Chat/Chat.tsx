@@ -25,26 +25,28 @@ export default function Chat() {
 
     //message variables
     const [message, setMessage] = useState([{}]);
-
     //initializing the socket
     useEffect(() => {
         const newSocket = io("http://localhost:4000")
         setSocket(newSocket)
 
         newSocket.on('chat message', (msg: any, user: any, room: any, date: any) => {
-            let newMessage = {
-                user: user,
-                content: msg,
-                created_at: date
+            if (room === roomId) {
+                let newMessage = {
+                    user: user,
+                    content: msg,
+                    created_at: date
+                }
+
+                setMessage(message => [...message, newMessage])
             }
 
-            setMessage(message => [...message, newMessage])
 
         })
         return () => {
             newSocket.disconnect()
         }
-    }, [])
+    }, [roomId])
 
     useEffect(() => {
         function CheckToken() {
@@ -68,14 +70,18 @@ export default function Chat() {
             axios.get(`http://localhost:8000/api/message/room/${roomId}`)
                 .then(function (res) {
                     if (res.status === 200) {
+                        message.shift()
                         setMessage(res.data)
                     }
                 }).catch(function (error) {
                     console.log(error)
+                    navigate("/")
                 })
         }
         getMessage();
-    }, [navigate, roomId, token, user])
+    }, [message, navigate, roomId, token, user])
+
+
     return (
         <>
             <div className="chat-container">

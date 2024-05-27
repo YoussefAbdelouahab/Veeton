@@ -18,6 +18,7 @@ export default function Dashboard(props: any) {
                 if (res.status === 200) {
                     localStorage.setItem("token", res.data.token)
                     navigate(`/room/${res.data.id}`)
+                    window.location.reload();
                     setSubmitError("")
                     setInputData("")
                     setRoomPassword("")

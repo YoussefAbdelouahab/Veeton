@@ -45,4 +45,19 @@ export class MessageController {
         }
     }
 
+
+    @Delete('/message/:id')
+    public async remove(@Param('id') id: string) {
+        try {
+            const message: Message = await this.messageRepository.findOne({ where: { id } });
+            if (!message) throw new Error('Call not found');
+
+            await this.messageRepository.remove(message);
+
+            return { success: "Message deleted" };
+        } catch (err) {
+            return { error: err.message }
+        }
+    }
+
 }

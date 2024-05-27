@@ -3,6 +3,7 @@ import InputEmoji from "react-input-emoji";
 import { useState } from "react"
 import axios from "axios"
 import "./ChatBox.scss"
+
 export default function ChatBox(props: any) {
     const [textMessage, setTextMessage] = useState("")
 
@@ -14,6 +15,10 @@ export default function ChatBox(props: any) {
         }).then(function (res) {
             if (res.status === 200) {
                 props.socket.emit('chat message', textMessage, localStorage.getItem("user"), props.id, Date.now())
+                var objDiv = document.getElementById("messages-container");
+                if (objDiv) {
+                    objDiv.scrollTop = objDiv.scrollHeight - 800;
+                }
             }
         }).catch(function (error) {
             console.log(error)
@@ -22,11 +27,10 @@ export default function ChatBox(props: any) {
     return (
         <>
             <div className="chatbox">
-                <div className="messages-container">
-                    {props.message.map((message: any) => (
-
-                        <MessageBox name={message.user} content={message.content} date={message.created_at} />
-                    ))}
+                <div className="messages-container" id="messages-container">
+                    {props.message.length > 0 ? props.message.map((message: any) => (
+                        <MessageBox name={message.user} content={message.content} date={message.created_at} id={message.id} />
+                    )) : null}
                 </div>
                 <div className="input-container">
                     <InputEmoji

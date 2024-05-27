@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 .message-box {
     max-width: 40%;
     width: fit-content;
@@ -19,7 +21,11 @@
         border-top-right-radius: 15px;
         border-bottom-right-radius: 15px;
         border-bottom-left-radius: 15px;
+        position: relative;
+
+
     }
+
 
     .date {
         display: flex;
@@ -35,9 +41,130 @@
 
     .content {
         flex-grow: 0;
-
         background-color: #182D62;
-        border-top-right-radius: 0px !important;
+        border-top-right-radius: 15px !important;
         border-top-left-radius: 15px !important;
+        border-bottom-right-radius: 0px !important;
+
+        .delete-btn {
+            display: none;
+            background-color: transparent;
+            width: 18%;
+            cursor: pointer;
+            position: absolute;
+            border: none;
+            top: -10px;
+            right: 10px;
+
+            img {
+                filter: invert(1);
+                width: 100%;
+            }
+        }
+    }
+
+    .content:hover {
+        background-color: #101d3f;
+    }
+
+    .content:hover .delete-btn {
+        display: block !important;
+    }
+
+
+}
+
+.delete-modal {
+
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, .5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .modal-container {
+        width: 25%;
+        background-color: #2e2e2e;
+        padding: 15px 10px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        display: flex;
+        flex-direction: column;
+
+        gap: 10px;
+
+        h1,
+        p {
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+
+        .modal-message {
+            display: flex;
+            flex-direction: column;
+            background-color: #101d3f;
+            padding: 5px 10px;
+            padding-bottom: 10px;
+            gap: 10px;
+            box-shadow: rgba(37, 37, 41, 0.61) 0px 7px 29px 0px;
+            border-radius: 10px;
+
+            .message-data {
+                display: flex;
+                gap: 30px;
+            }
+        }
+    }
+
+    .modal-btn {
+        display: flex;
+        gap: 30px;
+        width: 25%;
+        background-color: #161616;
+        padding: 15px 10px;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        button {
+            font-family: "Montserrat", sans-serif;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
+        .cancel-btn {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .cancel-btn:hover {
+            border-bottom: 1px solid white;
+        }
+
+        .delete-btn {
+            background-color: #e26464;
+            margin-right: 10px;
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+
+        .delete-btn:hover {
+            background-color: #f85555;
+
+        }
     }
 }
