@@ -13,7 +13,7 @@ export default function ChatBox(props: any) {
             room: props.id
         }).then(function (res) {
             if (res.status === 200) {
-                window.location.reload()
+                props.socket.emit('chat message', textMessage, localStorage.getItem("user"), props.id, Date.now())
             }
         }).catch(function (error) {
             console.log(error)
@@ -24,6 +24,7 @@ export default function ChatBox(props: any) {
             <div className="chatbox">
                 <div className="messages-container">
                     {props.message.map((message: any) => (
+
                         <MessageBox name={message.user} content={message.content} date={message.created_at} />
                     ))}
                 </div>
