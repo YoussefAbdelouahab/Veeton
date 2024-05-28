@@ -55,18 +55,26 @@ export class MessageController {
 
     public async create(@Body() data: Message) {
         try {
+            //get the message data in the body
             const message: Message = data;
+            //if no message data, send error
             if (!message) throw new BadRequestError('Message not created');
 
+            //search for the room of the message
             const room: Room = await this.roomRepository.findOne({ where: { id: data.getRoom() } });
+            //if no room find, send error
             if (!room) throw new NotFoundError('Room not found');
 
+            //assign the room to the message
             message.setRoom(room)
 
+            //save the message to database
             await this.messageRepository.save(message);
 
+            //return success
             return { success: "Message created" };
         } catch (error) {
+            //if any error return the error
             return { error: error.message };
         }
     }
@@ -105,13 +113,20 @@ export class MessageController {
     @Get('/message/room/:roomid')
     public async getAllMessageFromRoom(@Param('roomid') roomid: string) {
         try {
+            //find the room by it's room id in parameters
             const room: Room = await this.roomRepository.findOne({ where: { id: roomid } });
+            //if no room find, send error
             if (!room) throw new NotFoundError('Room not found');
 
+            //get all the message of the room, from the older to the newest
             const message: Message = await this.messageRepository.find({ where: { room: { id: roomid } }, order: { updated_at: "ASC" } });
+            //if no message found, send error
             if (!message) throw new Error('Messages not found');
+
+            //return the array of messages
             return message;
         } catch (err) {
+            //if any error return the error
             return { error: err.message }
         }
     }
@@ -153,13 +168,18 @@ export class MessageController {
     @Delete('/message/:id')
     public async remove(@Param('id') id: string) {
         try {
+            //find the message by it's message id in parameters
             const message: Message = await this.messageRepository.findOne({ where: { id } });
-            if (!message) throw new Error('Call not found');
+            //if message not found, send error
+            if (!message) throw new Error('Message not found');
 
+            //Remove the message from database
             await this.messageRepository.remove(message);
 
+            //Return success
             return { success: "Message deleted" };
         } catch (err) {
+            //if any error return the error
             return { error: err.message }
         }
     }
