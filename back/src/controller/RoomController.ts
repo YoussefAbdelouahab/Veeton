@@ -23,7 +23,46 @@ export class RoomController {
         this.roomRepository = AppDataSource.getRepository(Room);
     }
 
+    /**
+   * @swagger
+   * /room/create:
+   *   post:
+   *     tags:
+   *       - Room
+   *     summary: Create a new room
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/Room'
+   *     responses:
+   *       200:
+   *         description: An object indicating the success message if creation is successful
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 success:
+   *                   type: string
+   *       default:
+   *         description: An object containing the error message
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 error:
+   *                   type: string
+   */
     @Post("/room/create")
+    /**
+   * Create a new room.
+   *
+   * @param data - The room data entetred.
+   * @returns An object indicating the success or error message.
+   */
     public async create(@Body() data: Room) {
         try {
             const room: Room = data;
@@ -43,7 +82,46 @@ export class RoomController {
         }
     }
 
+    /**
+   * @swagger
+   * /room/join:
+   *   post:
+   *     tags:
+   *       - Room
+   *     summary: Join a room
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/Room'
+   *     responses:
+   *       200:
+   *         description: An object indicating the success message if join is successful
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 success:
+   *                   type: string
+   *       default:
+   *         description: An object containing the error message
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 error:
+   *                   type: string
+   */
     @Post("/room/join")
+    /**
+   * Join a room.
+   *
+   * @param data - The room data to join.
+   * @returns An object indicating the success or error message.
+   */
     public async join(@Body() data: Room, @Res() res: Response) {
         try {
             const room: Room = await this.roomRepository.findOne({ where: { id: data.getId() } });

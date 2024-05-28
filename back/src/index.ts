@@ -4,7 +4,9 @@ import * as express from 'express';
 import * as path from 'path';
 import * as cors from 'cors';
 import { AppDataSource } from './db/data-source';
-
+import * as swaggerui from "swagger-ui-express";
+import * as swaggerdoc from "swagger-jsdoc";
+import SwaggerOption from './swagger/SwaggerOption';
 const PORT: number = 8000;
 
 let app = express();
@@ -30,6 +32,19 @@ useExpressServer(app, {
     controllers: [controllerPath],
 });
 
-app.listen(PORT, () => {
-    return console.log(`Express is listening at http://localhost:${PORT}`);
+const spacs = swaggerdoc(SwaggerOption())
+app.use(
+    "/api-docs",
+    swaggerui.serve,
+    swaggerui.setup(spacs)
+)
+
+
+let server = app.listen(PORT, () => {
+    return (
+        console.log(`Express is listening at http://localhost:${PORT}`),
+        console.log(`Swagger is listening at http://localhost:${PORT}/api-docs`)
+    );
 });
+export { app }
+export default server
