@@ -105,3 +105,8 @@ To start the socket :
 | /api/message/create | POST | {"user": "Flore", "content": "Youssef, bienvenue chez Veeton", "room": "7MRPC3"}
 | /api/message/room/:id | GET |
 | /api/message/:id  | DELETE | 
+
+## Swagger
+| Type | URL |
+| :--- | :--- |
+| Swagger | http://localhost:8000/api-docs |
