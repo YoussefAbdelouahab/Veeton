@@ -24,7 +24,7 @@ export class Room {
     @Column({ nullable: true })
     private password: string
 
-    @OneToMany(() => Message, (message) => message.room, { cascade: true, onDelete: "CASCADE" })
+    @OneToMany(() => Message, (message) => message.room, { cascade: true, onDelete: "CASCADE" }) // Init one to many relation with Message
     message: Message[];
 
     constructor(name: string, password: string) {
@@ -32,6 +32,7 @@ export class Room {
         this.password = password;
     }
 
+    //Getters & setters
     public getId(): string {
         return this.id;
     }

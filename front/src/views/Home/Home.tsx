@@ -1,8 +1,7 @@
 import Wrapper from "../../components/Wrapper/Wrapper";
 import Create from "../../components/Form/Create/Create";
-
-import "./Home.scss"
 import Join from "../../components/Form/Join/Join";
+import "./Home.scss"
 
 export default function Home() {
     return (

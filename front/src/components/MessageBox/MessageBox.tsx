@@ -4,11 +4,15 @@ import "./MessageBox.scss"
 import { useState } from "react";
 
 export default function MessageBox(props: any) {
+    //variables
     const [ask, setAsk] = useState(false);
+    //onclick delete
     function handleDelete() {
+        //request to delete the message
         axios.delete(`http://localhost:8000/api/message/${props.id}`)
             .then(function (res) {
                 if (res.status === 200) {
+                    //if the message delete, hide the modal
                     setAsk(false);
                 }
             }).catch(function (error) {

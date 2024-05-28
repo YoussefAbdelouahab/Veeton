@@ -4,25 +4,21 @@ import { useState } from "react"
 import axios from "axios"
 import "./ChatBox.scss"
 
-function updateScroll() {
-    var element = document.getElementById("messages-container");
-    if (element) {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-}
-
 export default function ChatBox(props: any) {
+    //variable for the message input
     const [textMessage, setTextMessage] = useState("");
 
     function handleOnEnter() {
+        //request to create a new message
         axios.post(`http://localhost:8000/api/message/create`, {
             user: localStorage.getItem("user"),
             content: textMessage,
             room: props.id
         }).then(function (res) {
+            //check if status code is 200
             if (res.status === 200) {
+                //send the new message to socket server
                 props.socket.emit('chat message', textMessage, localStorage.getItem("user"), props.id, Date.now())
-                updateScroll();
             }
         }).catch(function (error) {
             console.log(error)

@@ -5,6 +5,7 @@ import axios from "axios";
 import './Create.scss'
 
 export default function Create() {
+    //variables
     const [room, setRoom] = useState({
         name: "",
         password: "",
@@ -13,8 +14,8 @@ export default function Create() {
     const [showError, setShowError] = useState(false);
     const navigate = useNavigate();
 
-
     function createRoom() {
+        //check if there is a user name
         if (user.length === 0) {
             setShowError(true);
             return 0;
@@ -35,8 +36,11 @@ export default function Create() {
                 ...(room.password.length > 0 ? { password: room.password.trim() } : {})
 
             }).then(function (res) {
+                //if status code is 200
                 if (res.status === 200) {
+                    //save the token
                     localStorage.setItem("token", res.data.token)
+                    //redirect to room page with id
                     navigate(`/room/${res.data.id}`)
                 }
             }).catch(function (error) {

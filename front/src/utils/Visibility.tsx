@@ -1,3 +1,4 @@
+//add show class to an element
 export function handleShow(className: string) {
     let element = document.getElementById(className);
     if (element) {
@@ -6,6 +7,7 @@ export function handleShow(className: string) {
     }
 }
 
+//add hidden class to an element
 export function handleHide(className: string) {
     let element = document.getElementById(className);
     if (element) {

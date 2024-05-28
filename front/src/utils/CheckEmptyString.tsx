@@ -1,3 +1,4 @@
+//Check if a string is empty
 export default function CheckEmptyString(str: string) {
     if (str.length > 0) {
         return 1;

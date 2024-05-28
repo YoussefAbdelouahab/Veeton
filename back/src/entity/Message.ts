@@ -38,6 +38,7 @@ export class Message {
         this.content = content;
     }
 
+    //Getters & setters
     public getId(): string {
         return this.id;
     }
@@ -61,7 +62,7 @@ export class Message {
         return this.updated_at;
     }
 
-    //Getters et setters de relations
+    //Getters et setters of relations
     public getRoom(): Room {
         return this.room;
     }
